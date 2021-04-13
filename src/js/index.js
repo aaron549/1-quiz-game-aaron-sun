@@ -1,22 +1,22 @@
 (function () {
   // Functions
-  function buildQuiz() {
+  function quizgame() {
     // variable to store the HTML output
     const output = [];
 
     // for each question...
-    myQuestions.forEach((currentQuestion, questionNumber) => {
+    myQuestions.forEach((current, questions) => {
       // variable to store the list of possible answers
       const answers = [];
 
       // and for each available answer...
-      for (letter in currentQuestion.answers) {
+      for (letter in current.answers) {
         // ...add an HTML radio button
         answers.push(
           `<label>
-                <input type="radio" name="question${questionNumber}" value="${letter}">
+                <input type="radio" name="question${questions}" value="${letter}">
                 ${letter} :
-                ${currentQuestion.answers[letter]}
+                ${current.answers[letter]}
               </label>`
         );
       }
@@ -24,7 +24,7 @@
       // add this question and its answers to the output
       output.push(
         `<div class="slide">
-              <div class="question"> ${currentQuestion.question} </div>
+              <div class="question"> ${current.question} </div>
               <div class="answers"> ${answers.join("")} </div>
             </div>`
       );
@@ -42,24 +42,24 @@
     let numCorrect = 0;
 
     // for each question...
-    myQuestions.forEach((currentQuestion, questionNumber) => {
+    myQuestions.forEach((current, questions) => {
       // find selected answer
-      const answerContainer = answerContainers[questionNumber];
-      const selector = `input[name=question${questionNumber}]:checked`;
+      const answerContainer = answerContainers[questions];
+      const selector = `input[name=question${questions}]:checked`;
       const userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
       // if answer is correct
-      if (userAnswer === currentQuestion.correctAnswer) {
+      if (userAnswer === current.correctAnswer) {
         // add to the number of correct answers
         numCorrect++;
 
         // color the answers green
-        answerContainers[questionNumber].style.color = "lightgreen";
+        answerContainers[questions].style.color = "lightgreen";
       }
       // if answer is wrong or blank
       else {
         // color the answers red
-        answerContainers[questionNumber].style.color = "red";
+        answerContainers[questions].style.color = "red";
       }
     });
 
@@ -99,37 +99,37 @@
   const submitButton = document.getElementById("submit");
   const myQuestions = [
     {
-      question: "Who invented JavaScript?",
+      question: "Which key is a homerow key?",
       answers: {
-        a: "Douglas Crockford",
-        b: "Sheryl Sandberg",
-        c: "Brendan Eich",
+        a: "L",
+        b: "B",
+        c: "Q",
       },
-      correctAnswer: "c",
+      correctAnswer: "a",
     },
     {
-      question: "Which one of these is a JavaScript package manager?",
+      question: "Who invented the typewrite?",
       answers: {
-        a: "Node.js",
-        b: "TypeScript",
-        c: "npm",
+        a: "Nikola Tesla",
+        b: "Christopher Latham Sholes",
+        c: "Thomas Edison",
       },
-      correctAnswer: "c",
+      correctAnswer: "b",
     },
     {
-      question: "Which tool can you use to ensure code quality?",
+      question: "Which country does not have its own unique keyboard layout?",
       answers: {
-        a: "Angular",
-        b: "jQuery",
-        c: "RequireJS",
-        d: "ESLint",
+        a: "Portugal",
+        b: "Austria",
+        c: "Belgium",
+        d: "Switzerland",
       },
-      correctAnswer: "d",
+      correctAnswer: "b",
     },
   ];
 
   // Kick things off
-  buildQuiz();
+  quizgame();
 
   // Pagination
   const previousButton = document.getElementById("previous");

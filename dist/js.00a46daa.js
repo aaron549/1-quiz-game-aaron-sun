@@ -120,21 +120,21 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"js/index.js":[function(require,module,exports) {
 (function () {
   // Functions
-  function buildQuiz() {
+  function quizgame() {
     // variable to store the HTML output
     var output = []; // for each question...
 
-    myQuestions.forEach(function (currentQuestion, questionNumber) {
+    myQuestions.forEach(function (current, questions) {
       // variable to store the list of possible answers
       var answers = []; // and for each available answer...
 
-      for (letter in currentQuestion.answers) {
+      for (letter in current.answers) {
         // ...add an HTML radio button
-        answers.push("<label>\n                <input type=\"radio\" name=\"question".concat(questionNumber, "\" value=\"").concat(letter, "\">\n                ").concat(letter, " :\n                ").concat(currentQuestion.answers[letter], "\n              </label>"));
+        answers.push("<label>\n                <input type=\"radio\" name=\"question".concat(questions, "\" value=\"").concat(letter, "\">\n                ").concat(letter, " :\n                ").concat(current.answers[letter], "\n              </label>"));
       } // add this question and its answers to the output
 
 
-      output.push("<div class=\"slide\">\n              <div class=\"question\"> ".concat(currentQuestion.question, " </div>\n              <div class=\"answers\"> ").concat(answers.join(""), " </div>\n            </div>"));
+      output.push("<div class=\"slide\">\n              <div class=\"question\"> ".concat(current.question, " </div>\n              <div class=\"answers\"> ").concat(answers.join(""), " </div>\n            </div>"));
     }); // finally combine our output list into one string of HTML and put it on the page
 
     quizContainer.innerHTML = output.join("");
@@ -146,21 +146,21 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
     var numCorrect = 0; // for each question...
 
-    myQuestions.forEach(function (currentQuestion, questionNumber) {
+    myQuestions.forEach(function (current, questions) {
       // find selected answer
-      var answerContainer = answerContainers[questionNumber];
-      var selector = "input[name=question".concat(questionNumber, "]:checked");
+      var answerContainer = answerContainers[questions];
+      var selector = "input[name=question".concat(questions, "]:checked");
       var userAnswer = (answerContainer.querySelector(selector) || {}).value; // if answer is correct
 
-      if (userAnswer === currentQuestion.correctAnswer) {
+      if (userAnswer === current.correctAnswer) {
         // add to the number of correct answers
         numCorrect++; // color the answers green
 
-        answerContainers[questionNumber].style.color = "lightgreen";
+        answerContainers[questions].style.color = "lightgreen";
       } // if answer is wrong or blank
       else {
           // color the answers red
-          answerContainers[questionNumber].style.color = "red";
+          answerContainers[questions].style.color = "red";
         }
     }); // show number of correct answers out of total
 
@@ -200,33 +200,33 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   var resultsContainer = document.getElementById("results");
   var submitButton = document.getElementById("submit");
   var myQuestions = [{
-    question: "Who invented JavaScript?",
+    question: "Which key is a homerow key?",
     answers: {
-      a: "Douglas Crockford",
-      b: "Sheryl Sandberg",
-      c: "Brendan Eich"
+      a: "L",
+      b: "B",
+      c: "Q"
     },
-    correctAnswer: "c"
+    correctAnswer: "a"
   }, {
-    question: "Which one of these is a JavaScript package manager?",
+    question: "Who invented the typewrite?",
     answers: {
-      a: "Node.js",
-      b: "TypeScript",
-      c: "npm"
+      a: "Nikola Tesla",
+      b: "Christopher Latham Sholes",
+      c: "Thomas Edison"
     },
-    correctAnswer: "c"
+    correctAnswer: "b"
   }, {
-    question: "Which tool can you use to ensure code quality?",
+    question: "Which country does not have its own unique keyboard layout?",
     answers: {
-      a: "Angular",
-      b: "jQuery",
-      c: "RequireJS",
-      d: "ESLint"
+      a: "Portugal",
+      b: "Austria",
+      c: "Belgium",
+      d: "Switzerland"
     },
-    correctAnswer: "d"
+    correctAnswer: "b"
   }]; // Kick things off
 
-  buildQuiz(); // Pagination
+  quizgame(); // Pagination
 
   var previousButton = document.getElementById("previous");
   var nextButton = document.getElementById("next");
