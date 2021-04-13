@@ -121,34 +121,34 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 (function () {
   function quizgame() {
     var output = [];
-    myQuestions.forEach(function (current, questions) {
-      var answers = [];
+    prompt1.forEach(function (current, prompt) {
+      var choice = [];
 
-      for (letter in current.answers) {
-        answers.push("<label>\n                <input type=\"radio\" name=\"question".concat(questions, "\" value=\"").concat(letter, "\">\n                ").concat(letter, " :\n                ").concat(current.answers[letter], "\n              </label>"));
+      for (letter in current.choice) {
+        choice.push("<label>\n                <input type=\"radio\" name=\"question".concat(prompt, "\" value=\"").concat(letter, "\">\n                ").concat(letter, " :\n                ").concat(current.choice[letter], "\n              </label>"));
       }
 
-      output.push("<div class=\"slide\">\n              <div class=\"question\"> ".concat(current.question, " </div>\n              <div class=\"answers\"> ").concat(answers.join(""), " </div>\n            </div>"));
+      output.push("<div class=\"slide\">\n              <div class=\"question\"> ".concat(current.question, " </div>\n              <div class=\"choice\"> ").concat(choice.join(""), " </div>\n            </div>"));
     });
     quizContainer.innerHTML = output.join("");
   }
 
   function showResults() {
-    var answerContainers = quizContainer.querySelectorAll(".answers");
+    var answerContainers = quizContainer.querySelectorAll(".choice");
     var numCorrect = 0;
-    myQuestions.forEach(function (current, questions) {
-      var answerContainer = answerContainers[questions];
-      var selector = "input[name=question".concat(questions, "]:checked");
+    prompt1.forEach(function (current, prompt) {
+      var answerContainer = answerContainers[prompt];
+      var selector = "input[name=question".concat(prompt, "]:checked");
       var userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
       if (userAnswer === current.correctAnswer) {
         numCorrect++;
-        answerContainers[questions].style.color = "lightgreen";
+        answerContainers[prompt].style.color = "lightgreen";
       } else {
-        answerContainers[questions].style.color = "red";
+        answerContainers[prompt].style.color = "red";
       }
     });
-    resultsContainer.innerHTML = "".concat(numCorrect, " out of ").concat(myQuestions.length);
+    resultsContainer.innerHTML = "".concat(numCorrect, " out of ").concat(prompt1.length);
   }
 
   function showSlide(n) {
@@ -182,17 +182,41 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   var quizContainer = document.getElementById("quiz");
   var resultsContainer = document.getElementById("results");
   var submitButton = document.getElementById("submit");
-  var myQuestions = [{
+  var prompt1 = [{
     question: "Which key is a homerow key?",
-    answers: {
+    choice: {
       a: "L",
       b: "B",
       c: "Q"
     },
     correctAnswer: "a"
   }, {
-    question: "Who invented the typewrite?",
-    answers: {
+    question: "Which country have the shortest space keys?",
+    choice: {
+      a: "Japan",
+      b: "Canada",
+      c: "Italy"
+    },
+    correctAnswer: "a"
+  }, {
+    question: "Which of the following is the father of all keyboards?",
+    choice: {
+      a: "AEK M0115",
+      b: "Cherry G80-3000SAV",
+      c: "IBM model M"
+    },
+    correctAnswer: "c"
+  }, {
+    question: "Which country have the shortest space keys?",
+    choice: {
+      a: "Japan",
+      b: "Canada",
+      c: "Italy"
+    },
+    correctAnswer: "a"
+  }, {
+    question: "Who invented the typewriter?",
+    choice: {
       a: "Nikola Tesla",
       b: "Christopher Latham Sholes",
       c: "Thomas Edison"
@@ -200,7 +224,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     correctAnswer: "b"
   }, {
     question: "Which country does not have its own unique keyboard layout?",
-    answers: {
+    choice: {
       a: "Portugal",
       b: "Austria",
       c: "Belgium",

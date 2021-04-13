@@ -2,15 +2,15 @@
   function quizgame() {
     const output = [];
 
-    myQuestions.forEach((current, questions) => {
-      const answers = [];
+    prompt1.forEach((current, prompt) => {
+      const choice = [];
 
-      for (letter in current.answers) {
-        answers.push(
+      for (letter in current.choice) {
+        choice.push(
           `<label>
-                <input type="radio" name="question${questions}" value="${letter}">
+                <input type="radio" name="question${prompt}" value="${letter}">
                 ${letter} :
-                ${current.answers[letter]}
+                ${current.choice[letter]}
               </label>`
         );
       }
@@ -18,7 +18,7 @@
       output.push(
         `<div class="slide">
               <div class="question"> ${current.question} </div>
-              <div class="answers"> ${answers.join("")} </div>
+              <div class="choice"> ${choice.join("")} </div>
             </div>`
       );
     });
@@ -27,25 +27,25 @@
   }
 
   function showResults() {
-    const answerContainers = quizContainer.querySelectorAll(".answers");
+    const answerContainers = quizContainer.querySelectorAll(".choice");
 
     let numCorrect = 0;
 
-    myQuestions.forEach((current, questions) => {
-      const answerContainer = answerContainers[questions];
-      const selector = `input[name=question${questions}]:checked`;
+    prompt1.forEach((current, prompt) => {
+      const answerContainer = answerContainers[prompt];
+      const selector = `input[name=question${prompt}]:checked`;
       const userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
       if (userAnswer === current.correctAnswer) {
         numCorrect++;
 
-        answerContainers[questions].style.color = "lightgreen";
+        answerContainers[prompt].style.color = "lightgreen";
       } else {
-        answerContainers[questions].style.color = "red";
+        answerContainers[prompt].style.color = "red";
       }
     });
 
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    resultsContainer.innerHTML = `${numCorrect} out of ${prompt1.length}`;
   }
 
   function showSlide(n) {
@@ -77,10 +77,10 @@
   const quizContainer = document.getElementById("quiz");
   const resultsContainer = document.getElementById("results");
   const submitButton = document.getElementById("submit");
-  const myQuestions = [
+  const prompt1 = [
     {
       question: "Which key is a homerow key?",
-      answers: {
+      choice: {
         a: "L",
         b: "B",
         c: "Q",
@@ -88,8 +88,35 @@
       correctAnswer: "a",
     },
     {
-      question: "Who invented the typewrite?",
-      answers: {
+      question: "Which country have the shortest space keys?",
+      choice: {
+        a: "Japan",
+        b: "Canada",
+        c: "Italy",
+      },
+      correctAnswer: "a",
+    },
+    {
+      question: "Which of the following is the father of all keyboards?",
+      choice: {
+        a: "AEK M0115",
+        b: "Cherry G80-3000SAV",
+        c: "IBM model M",
+      },
+      correctAnswer: "c",
+    },
+    {
+      question: "Which country have the shortest space keys?",
+      choice: {
+        a: "Japan",
+        b: "Canada",
+        c: "Italy",
+      },
+      correctAnswer: "a",
+    },
+    {
+      question: "Who invented the typewriter?",
+      choice: {
         a: "Nikola Tesla",
         b: "Christopher Latham Sholes",
         c: "Thomas Edison",
@@ -98,7 +125,7 @@
     },
     {
       question: "Which country does not have its own unique keyboard layout?",
-      answers: {
+      choice: {
         a: "Portugal",
         b: "Austria",
         c: "Belgium",
