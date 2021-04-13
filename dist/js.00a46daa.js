@@ -119,51 +119,35 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/index.js":[function(require,module,exports) {
 (function () {
-  // Functions
   function quizgame() {
-    // variable to store the HTML output
-    var output = []; // for each question...
-
+    var output = [];
     myQuestions.forEach(function (current, questions) {
-      // variable to store the list of possible answers
-      var answers = []; // and for each available answer...
+      var answers = [];
 
       for (letter in current.answers) {
-        // ...add an HTML radio button
         answers.push("<label>\n                <input type=\"radio\" name=\"question".concat(questions, "\" value=\"").concat(letter, "\">\n                ").concat(letter, " :\n                ").concat(current.answers[letter], "\n              </label>"));
-      } // add this question and its answers to the output
-
+      }
 
       output.push("<div class=\"slide\">\n              <div class=\"question\"> ".concat(current.question, " </div>\n              <div class=\"answers\"> ").concat(answers.join(""), " </div>\n            </div>"));
-    }); // finally combine our output list into one string of HTML and put it on the page
-
+    });
     quizContainer.innerHTML = output.join("");
   }
 
   function showResults() {
-    // gather answer containers from our quiz
-    var answerContainers = quizContainer.querySelectorAll(".answers"); // keep track of user's answers
-
-    var numCorrect = 0; // for each question...
-
+    var answerContainers = quizContainer.querySelectorAll(".answers");
+    var numCorrect = 0;
     myQuestions.forEach(function (current, questions) {
-      // find selected answer
       var answerContainer = answerContainers[questions];
       var selector = "input[name=question".concat(questions, "]:checked");
-      var userAnswer = (answerContainer.querySelector(selector) || {}).value; // if answer is correct
+      var userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
       if (userAnswer === current.correctAnswer) {
-        // add to the number of correct answers
-        numCorrect++; // color the answers green
-
+        numCorrect++;
         answerContainers[questions].style.color = "lightgreen";
-      } // if answer is wrong or blank
-      else {
-          // color the answers red
-          answerContainers[questions].style.color = "red";
-        }
-    }); // show number of correct answers out of total
-
+      } else {
+        answerContainers[questions].style.color = "red";
+      }
+    });
     resultsContainer.innerHTML = "".concat(numCorrect, " out of ").concat(myQuestions.length);
   }
 
@@ -193,8 +177,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   function showPreviousSlide() {
     showSlide(currentSlide - 1);
-  } // Variables
-
+  }
 
   var quizContainer = document.getElementById("quiz");
   var resultsContainer = document.getElementById("results");
@@ -224,17 +207,13 @@ parcelRequire = (function (modules, cache, entry, globalName) {
       d: "Switzerland"
     },
     correctAnswer: "b"
-  }]; // Kick things off
-
-  quizgame(); // Pagination
-
+  }];
+  quizgame();
   var previousButton = document.getElementById("previous");
   var nextButton = document.getElementById("next");
   var slides = document.querySelectorAll(".slide");
-  var currentSlide = 0; // Show the first slide
-
-  showSlide(currentSlide); // Event listeners
-
+  var currentSlide = 0;
+  showSlide(currentSlide);
   submitButton.addEventListener("click", showResults);
   previousButton.addEventListener("click", showPreviousSlide);
   nextButton.addEventListener("click", showNextSlide);

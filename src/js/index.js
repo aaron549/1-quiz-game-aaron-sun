@@ -1,17 +1,11 @@
 (function () {
-  // Functions
   function quizgame() {
-    // variable to store the HTML output
     const output = [];
 
-    // for each question...
     myQuestions.forEach((current, questions) => {
-      // variable to store the list of possible answers
       const answers = [];
 
-      // and for each available answer...
       for (letter in current.answers) {
-        // ...add an HTML radio button
         answers.push(
           `<label>
                 <input type="radio" name="question${questions}" value="${letter}">
@@ -21,7 +15,6 @@
         );
       }
 
-      // add this question and its answers to the output
       output.push(
         `<div class="slide">
               <div class="question"> ${current.question} </div>
@@ -30,40 +23,28 @@
       );
     });
 
-    // finally combine our output list into one string of HTML and put it on the page
     quizContainer.innerHTML = output.join("");
   }
 
   function showResults() {
-    // gather answer containers from our quiz
     const answerContainers = quizContainer.querySelectorAll(".answers");
 
-    // keep track of user's answers
     let numCorrect = 0;
 
-    // for each question...
     myQuestions.forEach((current, questions) => {
-      // find selected answer
       const answerContainer = answerContainers[questions];
       const selector = `input[name=question${questions}]:checked`;
       const userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
-      // if answer is correct
       if (userAnswer === current.correctAnswer) {
-        // add to the number of correct answers
         numCorrect++;
 
-        // color the answers green
         answerContainers[questions].style.color = "lightgreen";
-      }
-      // if answer is wrong or blank
-      else {
-        // color the answers red
+      } else {
         answerContainers[questions].style.color = "red";
       }
     });
 
-    // show number of correct answers out of total
     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
   }
 
@@ -93,7 +74,6 @@
     showSlide(currentSlide - 1);
   }
 
-  // Variables
   const quizContainer = document.getElementById("quiz");
   const resultsContainer = document.getElementById("results");
   const submitButton = document.getElementById("submit");
@@ -128,19 +108,15 @@
     },
   ];
 
-  // Kick things off
   quizgame();
 
-  // Pagination
   const previousButton = document.getElementById("previous");
   const nextButton = document.getElementById("next");
   const slides = document.querySelectorAll(".slide");
   let currentSlide = 0;
 
-  // Show the first slide
   showSlide(currentSlide);
 
-  // Event listeners
   submitButton.addEventListener("click", showResults);
   previousButton.addEventListener("click", showPreviousSlide);
   nextButton.addEventListener("click", showNextSlide);
