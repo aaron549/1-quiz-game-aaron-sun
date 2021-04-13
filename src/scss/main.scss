@@ -1,17 +1,17 @@
 body {
   font-size: 20px;
-  color: #333;
+  color: black;
   font-weight: 300;
   text-align: center;
-  background-color: red;
+  background-color: lightcoral;
 }
 h1 {
   font-weight: 300;
   margin: 0px;
   padding: 10px;
   font-size: 20px;
-  background-color: #444;
-  color: #fff;
+  background-color: black;
+  color: white;
 }
 .question {
   font-size: 30px;
@@ -28,8 +28,8 @@ h1 {
 }
 button {
   font-size: 22px;
-  background-color: #279;
-  color: #fff;
+  background-color: green;
+  color: white;
   border: 0px;
   border-radius: 3px;
   padding: 20px;
@@ -37,7 +37,7 @@ button {
   margin-bottom: 20px;
 }
 button:hover {
-  background-color: #38a;
+  background-color: green;
 }
 
 .slide {
