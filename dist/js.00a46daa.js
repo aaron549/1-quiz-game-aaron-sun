@@ -119,36 +119,49 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/index.js":[function(require,module,exports) {
 (function () {
+  //"global scope and ensures quiz wont interfere with other script"
   function quizgame() {
-    var output = [];
+    //function that runs at the start
+    var output = []; //varible to store the html output
+
     prompt1.forEach(function (current, prompt) {
-      var choice = [];
+      //foreach addresses each qustion
+      var choice = []; //list of possible answers - list of answer choices
 
       for (letter in current.choice) {
-        choice.push("<label>\n                <input type=\"radio\" name=\"question".concat(prompt, "\" value=\"").concat(letter, "\">\n                ").concat(letter, " :\n                ").concat(current.choice[letter], "\n              </label>"));
+        //foreach answer..
+        choice.push( //adds HTML radio btn
+        "<label>\n                <input type=\"radio\" name=\"question".concat(prompt, "\" value=\"").concat(letter, "\">\n                ").concat(letter, " :\n                ").concat(current.choice[letter], "\n              </label>"));
       }
 
-      output.push("<div class=\"slide\">\n              <div class=\"question\"> ".concat(current.question, " </div>\n              <div class=\"choice\"> ").concat(choice.join(""), " </div>\n            </div>"));
+      output.push( //add q and a to output
+      "<div class=\"slide\">\n              <div class=\"question\"> ".concat(current.question, " </div>\n              <div class=\"choice\"> ").concat(choice.join(""), " </div>\n            </div>"));
     });
-    quizContainer.innerHTML = output.join("");
+    containerquiz.innerHTML = output.join(""); //joins output into one string on page
   }
 
   function showResults() {
-    var answerContainers = quizContainer.querySelectorAll(".choice");
-    var numCorrect = 0;
+    //function that runs after submission
+    var answerContainers = containerquiz.querySelectorAll(".choice"); // gets answers from quiz
+
+    var numCorrect = 0; //tracks answers
+
     prompt1.forEach(function (current, prompt) {
+      //current q , prompt num - for each qustion
       var answerContainer = answerContainers[prompt];
       var selector = "input[name=question".concat(prompt, "]:checked");
-      var userAnswer = (answerContainer.querySelector(selector) || {}).value;
+      var userAnswer = (answerContainer.querySelector(selector) || {}).value; //looks for answer
 
       if (userAnswer === current.correctAnswer) {
-        numCorrect++;
-        answerContainers[prompt].style.color = "lightgreen";
+        //if answer correct
+        numCorrect++; //adds to # of correct answers
+
+        answerContainers[prompt].style.color = "lightgreen"; //right green
       } else {
-        answerContainers[prompt].style.color = "red";
+        answerContainers[prompt].style.color = "red"; //wrong red
       }
     });
-    resultsContainer.innerHTML = "".concat(numCorrect, " out of ").concat(prompt1.length);
+    containerR.innerHTML = "".concat(numCorrect, " out of ").concat(prompt1.length); //answers correct over amt of q
   }
 
   function showSlide(n) {
@@ -164,10 +177,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
     if (currentSlide === slides.length - 1) {
       nextButton.style.display = "none";
-      submitButton.style.display = "inline-block";
+      submitbtn.style.display = "inline-block";
     } else {
       nextButton.style.display = "inline-block";
-      submitButton.style.display = "none";
+      submitbtn.style.display = "none";
     }
   }
 
@@ -179,10 +192,12 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     showSlide(currentSlide - 1);
   }
 
-  var quizContainer = document.getElementById("quiz");
-  var resultsContainer = document.getElementById("results");
-  var submitButton = document.getElementById("submit");
-  var prompt1 = [{
+  var containerquiz = document.getElementById("quiz"); //html element storage, and references them in variables
+
+  var containerR = document.getElementById("results");
+  var submitbtn = document.getElementById("submit");
+  var prompt1 = [//quiz game questions
+  {
     question: "Which key is a homerow key?",
     choice: {
       a: "L",
@@ -207,14 +222,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     },
     correctAnswer: "c"
   }, {
-    question: "Which country have the shortest space keys?",
-    choice: {
-      a: "Japan",
-      b: "Canada",
-      c: "Italy"
-    },
-    correctAnswer: "a"
-  }, {
     question: "Who invented the typewriter?",
     choice: {
       a: "Nikola Tesla",
@@ -231,14 +238,17 @@ parcelRequire = (function (modules, cache, entry, globalName) {
       d: "Switzerland"
     },
     correctAnswer: "b"
-  }];
+  }]; //starts
+
   quizgame();
   var previousButton = document.getElementById("previous");
   var nextButton = document.getElementById("next");
   var slides = document.querySelectorAll(".slide");
   var currentSlide = 0;
-  showSlide(currentSlide);
-  submitButton.addEventListener("click", showResults);
+  showSlide(currentSlide); //event listener
+
+  submitbtn.addEventListener("click", showResults); //submit, show results
+
   previousButton.addEventListener("click", showPreviousSlide);
   nextButton.addEventListener("click", showNextSlide);
 })();
@@ -270,7 +280,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56192" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62276" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

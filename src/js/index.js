@@ -1,12 +1,17 @@
 (function () {
+  //"global scope and ensures quiz wont interfere with other script"
   function quizgame() {
-    const output = [];
+    //function that runs at the start
+    const output = []; //varible to store the html output
 
     prompt1.forEach((current, prompt) => {
-      const choice = [];
+      //foreach addresses each qustion
+      const choice = []; //list of possible answers - list of answer choices
 
       for (letter in current.choice) {
+        //foreach answer..
         choice.push(
+          //adds HTML radio btn
           `<label>
                 <input type="radio" name="question${prompt}" value="${letter}">
                 ${letter} :
@@ -16,6 +21,7 @@
       }
 
       output.push(
+        //add q and a to output
         `<div class="slide">
               <div class="question"> ${current.question} </div>
               <div class="choice"> ${choice.join("")} </div>
@@ -23,29 +29,32 @@
       );
     });
 
-    quizContainer.innerHTML = output.join("");
+    containerquiz.innerHTML = output.join(""); //joins output into one string on page
   }
 
   function showResults() {
-    const answerContainers = quizContainer.querySelectorAll(".choice");
+    //function that runs after submission
+    const answerContainers = containerquiz.querySelectorAll(".choice"); // gets answers from quiz
 
-    let numCorrect = 0;
+    let numCorrect = 0; //tracks answers
 
     prompt1.forEach((current, prompt) => {
+      //current q , prompt num - for each qustion
       const answerContainer = answerContainers[prompt];
       const selector = `input[name=question${prompt}]:checked`;
-      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+      const userAnswer = (answerContainer.querySelector(selector) || {}).value; //looks for answer
 
       if (userAnswer === current.correctAnswer) {
-        numCorrect++;
+        //if answer correct
+        numCorrect++; //adds to # of correct answers
 
-        answerContainers[prompt].style.color = "lightgreen";
+        answerContainers[prompt].style.color = "lightgreen"; //right green
       } else {
-        answerContainers[prompt].style.color = "red";
+        answerContainers[prompt].style.color = "red"; //wrong red
       }
     });
 
-    resultsContainer.innerHTML = `${numCorrect} out of ${prompt1.length}`;
+    containerR.innerHTML = `${numCorrect} out of ${prompt1.length}`; //answers correct over amt of q
   }
 
   function showSlide(n) {
@@ -59,10 +68,10 @@
     }
     if (currentSlide === slides.length - 1) {
       nextButton.style.display = "none";
-      submitButton.style.display = "inline-block";
+      submitbtn.style.display = "inline-block";
     } else {
       nextButton.style.display = "inline-block";
-      submitButton.style.display = "none";
+      submitbtn.style.display = "none";
     }
   }
 
@@ -74,10 +83,11 @@
     showSlide(currentSlide - 1);
   }
 
-  const quizContainer = document.getElementById("quiz");
-  const resultsContainer = document.getElementById("results");
-  const submitButton = document.getElementById("submit");
+  const containerquiz = document.getElementById("quiz"); //html element storage, and references them in variables
+  const containerR = document.getElementById("results");
+  const submitbtn = document.getElementById("submit");
   const prompt1 = [
+    //quiz game questions
     {
       question: "Which key is a homerow key?",
       choice: {
@@ -106,15 +116,6 @@
       correctAnswer: "c",
     },
     {
-      question: "Which country have the shortest space keys?",
-      choice: {
-        a: "Japan",
-        b: "Canada",
-        c: "Italy",
-      },
-      correctAnswer: "a",
-    },
-    {
       question: "Who invented the typewriter?",
       choice: {
         a: "Nikola Tesla",
@@ -134,7 +135,7 @@
       correctAnswer: "b",
     },
   ];
-
+  //starts
   quizgame();
 
   const previousButton = document.getElementById("previous");
@@ -143,8 +144,8 @@
   let currentSlide = 0;
 
   showSlide(currentSlide);
-
-  submitButton.addEventListener("click", showResults);
+  //event listener
+  submitbtn.addEventListener("click", showResults); //submit, show results
   previousButton.addEventListener("click", showPreviousSlide);
   nextButton.addEventListener("click", showNextSlide);
 })();
