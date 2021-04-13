@@ -29,7 +29,7 @@
       );
     });
 
-    containerquiz.innerHTML = output.join(""); //joins output into one string on page
+    containerquiz.innerHTML = output.join(""); //joins output into one string on page - shows on page
   }
 
   function showResults() {
@@ -57,9 +57,13 @@
     containerR.innerHTML = `${numCorrect} out of ${prompt1.length}`; //answers correct over amt of q
   }
 
+  //show first
   function showSlide(n) {
     slides[currentSlide].classList.remove("active-slide");
     slides[n].classList.add("active-slide");
+    //^Hide the current slide by removing the active-slide class.
+    //Show the new slide by adding the active-slide class.
+    //Update the current slide number
     currentSlide = n;
     if (currentSlide === 0) {
       previousButton.style.display = "none";
@@ -74,13 +78,15 @@
       submitbtn.style.display = "none";
     }
   }
+  //^If we’re on the first slide, hide the Previous Slide button. Otherwise, show the button.
+  //If we’re on the last slide, hide the Next Slide button and show the Submit button. Otherwise, show the Next Slide button and hide the Submit button
 
   function showNextSlide() {
-    showSlide(currentSlide + 1);
+    showSlide(currentSlide + 1); //makes the navigatoin work
   }
 
   function showPreviousSlide() {
-    showSlide(currentSlide - 1);
+    showSlide(currentSlide - 1); //makes navi work
   }
 
   const containerquiz = document.getElementById("quiz"); //html element storage, and references them in variables
@@ -137,7 +143,7 @@
   ];
   //starts
   quizgame();
-
+  //pagination
   const previousButton = document.getElementById("previous");
   const nextButton = document.getElementById("next");
   const slides = document.querySelectorAll(".slide");
@@ -146,6 +152,6 @@
   showSlide(currentSlide);
   //event listener
   submitbtn.addEventListener("click", showResults); //submit, show results
-  previousButton.addEventListener("click", showPreviousSlide);
-  nextButton.addEventListener("click", showNextSlide);
+  previousButton.addEventListener("click", showPreviousSlide); //connects the nvai
+  nextButton.addEventListener("click", showNextSlide); //connects the navi
 })();

@@ -137,7 +137,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
       output.push( //add q and a to output
       "<div class=\"slide\">\n              <div class=\"question\"> ".concat(current.question, " </div>\n              <div class=\"choice\"> ").concat(choice.join(""), " </div>\n            </div>"));
     });
-    containerquiz.innerHTML = output.join(""); //joins output into one string on page
+    containerquiz.innerHTML = output.join(""); //joins output into one string on page - shows on page
   }
 
   function showResults() {
@@ -162,11 +162,15 @@ parcelRequire = (function (modules, cache, entry, globalName) {
       }
     });
     containerR.innerHTML = "".concat(numCorrect, " out of ").concat(prompt1.length); //answers correct over amt of q
-  }
+  } //show first
+
 
   function showSlide(n) {
     slides[currentSlide].classList.remove("active-slide");
-    slides[n].classList.add("active-slide");
+    slides[n].classList.add("active-slide"); //^Hide the current slide by removing the active-slide class.
+    //Show the new slide by adding the active-slide class.
+    //Update the current slide number
+
     currentSlide = n;
 
     if (currentSlide === 0) {
@@ -182,14 +186,16 @@ parcelRequire = (function (modules, cache, entry, globalName) {
       nextButton.style.display = "inline-block";
       submitbtn.style.display = "none";
     }
-  }
+  } //^If we’re on the first slide, hide the Previous Slide button. Otherwise, show the button.
+  //If we’re on the last slide, hide the Next Slide button and show the Submit button. Otherwise, show the Next Slide button and hide the Submit button
+
 
   function showNextSlide() {
-    showSlide(currentSlide + 1);
+    showSlide(currentSlide + 1); //makes the navigatoin work
   }
 
   function showPreviousSlide() {
-    showSlide(currentSlide - 1);
+    showSlide(currentSlide - 1); //makes navi work
   }
 
   var containerquiz = document.getElementById("quiz"); //html element storage, and references them in variables
@@ -240,7 +246,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
     correctAnswer: "b"
   }]; //starts
 
-  quizgame();
+  quizgame(); //pagination
+
   var previousButton = document.getElementById("previous");
   var nextButton = document.getElementById("next");
   var slides = document.querySelectorAll(".slide");
@@ -249,8 +256,9 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   submitbtn.addEventListener("click", showResults); //submit, show results
 
-  previousButton.addEventListener("click", showPreviousSlide);
-  nextButton.addEventListener("click", showNextSlide);
+  previousButton.addEventListener("click", showPreviousSlide); //connects the nvai
+
+  nextButton.addEventListener("click", showNextSlide); //connects the navi
 })();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
